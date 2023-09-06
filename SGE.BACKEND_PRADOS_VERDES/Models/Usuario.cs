@@ -14,5 +14,6 @@
         public bool? usua_flag_estado { get; set; }
         public bool? usua_indicador_asesor { get; set; }
         public int? vendc_icod_vendedor { get; set; }
+        public bool? usua_bweb { get; set; }
     }
 }

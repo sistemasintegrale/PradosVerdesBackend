@@ -71,5 +71,59 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task<BaseResponse<IEnumerable<Distrito>>> Distritos()
+        {
+            var response = new BaseResponse<IEnumerable<Distrito>>();
+            try
+            {
+                using (var conexion = _conexion.ObtenerConnexion())
+                {
+                    response.Data = await conexion.QueryAsync<Distrito>("SGEV_DISTRITOS_LISTAR", commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                response.innerExeption = ex.Message;
+                response.IsSucces = false;
+            }
+            return response;
+        }
+
+        public async Task<BaseResponse<IEnumerable<Funerarias>>> Funerarias()
+        {
+            var response = new BaseResponse<IEnumerable<Funerarias>>();
+            try
+            {
+                using (var conexion = _conexion.ObtenerConnexion())
+                {
+                    response.Data = await conexion.QueryAsync<Funerarias>("SGEV_FUNERARIAS_LISTAR", commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                response.innerExeption = ex.Message;
+                response.IsSucces = false;
+            }
+            return response;
+        }
+
+        public async Task<BaseResponse<RegistroParametro>> Parametros()
+        {
+            var response = new BaseResponse<RegistroParametro>();
+            try
+            {
+                using (var conexion = _conexion.ObtenerConnexion())
+                {
+                    response.Data = await conexion.QueryFirstOrDefaultAsync<RegistroParametro>("SGE_REGISTRO_PARAMETRO_LISTAR", commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                response.innerExeption = ex.Message;
+                response.IsSucces = false;
+            }
+            return response;
+        }
     }
 }

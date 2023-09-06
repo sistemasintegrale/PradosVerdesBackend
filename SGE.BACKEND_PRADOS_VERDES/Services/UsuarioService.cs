@@ -33,13 +33,22 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
             {
                 if (Encriptador.decod(account.usua_password_usuario!) == tokenRequestDto.password)
                 {
-                    response.Data = GenerateToken(account);
-                    response.Mensaje = ReplyMessage.MESSAGE_TOKEN;
-                    return response;
+                    if (account.usua_bweb == true)
+                    {
+                        response.Data = GenerateToken(account);
+                        response.Mensaje = ReplyMessage.MESSAGE_TOKEN;
+                        return response;
+                    }
+                    else
+                    {
+                        response.Mensaje = "Usuario sin Acceso";
+                        response.IsSucces = false;
+                    }
+                    
                 }
                 else
                 {
-                    response.Mensaje = ReplyMessage.MESSAGE_TOKEN_ERROR;
+                    response.Mensaje = "Contraseña Incorrecta";
                     response.IsSucces = false;
                 }
             }
@@ -86,6 +95,7 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
                     var parametros = new DynamicParameters();
                     parametros.Add("usua_icod_usuario", usua_icod_usuario);
                     response.Data = await conexion.QueryFirstAsync<Usuario>("USP_USUARIO_GET_BY_ID", parametros, commandType: CommandType.StoredProcedure);
+                    response.Data.usua_password_usuario = Encriptador.decod(response.Data.usua_password_usuario!);
                 }
             }
             catch (Exception ex)

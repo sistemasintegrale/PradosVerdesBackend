@@ -18,6 +18,7 @@ builder.Services.AddSingleton(new Conexion(builder.Configuration.GetConnectionSt
 
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IContratoService, ContratoService>();
+builder.Services.AddScoped<IGeneralService, GeneralService>();
 builder.Services.AddCors(options => options.AddPolicy("AllowWebapp",
                                     builder => builder.AllowAnyOrigin()
                                                     .AllowAnyHeader()

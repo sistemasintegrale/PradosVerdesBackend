@@ -11,5 +11,9 @@ namespace SGE.BACKEND_PRADOS_VERDES.Interfaces
         Task<BaseResponse<int>> ContratoInsertar(Contrato contrato);
         Task<BaseResponse<bool>> ContratoModificar(Contrato contrato);
         Task<BaseResponse<bool>> ContratoIEliminar(int cntc_icod_contrato);
+
+        Task<BaseResponse<IEnumerable<Funerarias>>> Funerarias();
+        Task<BaseResponse<IEnumerable<Distrito>>> Distritos();
+        Task<BaseResponse<RegistroParametro>> Parametros();
     }
 }

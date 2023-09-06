@@ -121,8 +121,8 @@
         public bool? flag_indicador { get; set; }
         public decimal? cntc_npago_covid19 { get; set; }
         public int? cntc_icod_deceso { get; set; }
-        public int? cntc_icod_foma_mantev { get; set; }
-        public decimal? CntcNfinanciamientro { get; set; }
+        public int? cntc_icod_foma_mante { get; set; }
+        public decimal? cntc_nfinanciamientro { get; set; }
         public decimal? cntc_nmonto_total_foma { get; set; }
         public decimal? cntc_nmonto_total_foma_pagado { get; set; }
         public string? cntc_vnumero_contrato_corr { get; set; }
