@@ -7,6 +7,6 @@
         public string? tabvd_vdesc_abreviado { get; set; }
         public int tabvd_iid_tabla_venta_det { get; set; }
         public string? tabvd_cestado { get; set; }
-
+        public int? tabvd_icod_ref { get; set; }
     }
 }

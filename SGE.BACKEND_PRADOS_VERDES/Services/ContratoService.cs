@@ -20,6 +20,24 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
             _mapper = mapper;
         }
 
+        public async Task<BaseResponse<bool>> ContratoEliminar(EliminarDTO dTO)
+        {
+            var response = new BaseResponse<bool>();
+            try
+            {
+                using (var conexion = _conexion.ObtenerConnexion())
+                {
+                      await conexion.ExecuteAsync("USP_CONTRATO_ELIMINAR", dTO, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                response.innerExeption = ex.Message;
+                response.IsSucces = false;
+            }
+            return response;
+        }
+
         public async Task<BaseResponse<Contrato>> ContratoGetById(int cntc_icod_contrato)
         {
             var response = new BaseResponse<Contrato>();
@@ -38,25 +56,16 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
             return response;
         }
 
-        public Task<BaseResponse<bool>> ContratoIEliminar(int cntc_icod_contrato)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<BaseResponse<int>> ContratoInsertar(Contrato contrato)
+        public async Task<BaseResponse<int>> ContratoGuardar(Contrato contrato)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<BaseResponse<IEnumerable<Contrato>>> ContratoListarPorFechas(ContratoFiltersDto filter)
-        {
-            var response = new BaseResponse<IEnumerable<Contrato>>();
+            var response = new BaseResponse<int>();
             try
             {
-                var param = _mapper.Map<ContratoFilter>(filter);
+
                 using (var conexion = _conexion.ObtenerConnexion())
                 {
-                    response.Data = await conexion.QueryAsync<Contrato>("USP_CONTRATO_LISTAR_POR_FECHA", param, commandType: CommandType.StoredProcedure);
+                    response.Data = await conexion.ExecuteScalarAsync<int>("USP_CONTRATO_GUARDAR", contrato, commandType: CommandType.StoredProcedure);
                 }
             }
             catch (Exception ex)
@@ -67,9 +76,46 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
             return response;
         }
 
-        public Task<BaseResponse<bool>> ContratoModificar(Contrato contrato)
+        public async Task<BaseResponse<IEnumerable<ContratoDTO>>> ContratoListarPorFechas(ContratoFiltersDto filter)
         {
-            throw new NotImplementedException();
+            var response = new BaseResponse<IEnumerable<ContratoDTO>>();
+            try
+            {
+                var param = _mapper.Map<ContratoFilter>(filter);
+                using (var conexion = _conexion.ObtenerConnexion())
+                {
+                    response.Data = await conexion.QueryAsync<ContratoDTO>("USP_CONTRATO_LISTAR_POR_FECHA", param, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                response.innerExeption = ex.Message;
+                response.IsSucces = false;
+            }
+            return response;
+        }
+
+
+
+        public async Task<BaseResponse<int>> ContratoValidarSerie(string serie)
+        {
+            var response = new BaseResponse<int>();
+            try
+            {
+
+                using (var conexion = _conexion.ObtenerConnexion())
+                {
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@serie", serie);
+                    response.Data = await conexion.ExecuteScalarAsync<int>("USP_CONTRATO_VALIDAR_SERIE", parametros, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                response.innerExeption = ex.Message;
+                response.IsSucces = false;
+            }
+            return response;
         }
 
         public async Task<BaseResponse<IEnumerable<Distrito>>> Distritos()

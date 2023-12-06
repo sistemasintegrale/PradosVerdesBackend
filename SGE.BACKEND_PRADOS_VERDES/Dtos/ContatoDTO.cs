@@ -1,10 +1,10 @@
-﻿namespace SGE.BACKEND_PRADOS_VERDES.Models
+﻿namespace SGE.BACKEND_PRADOS_VERDES.Dtos
 {
-    public class Contrato
+    public class ContratoDTO
     {
         public int cntc_icod_contrato { get; set; }
         public string? cntc_vnumero_contrato { get; set; }
-        public DateTime? cntc_sfecha_contrato { get; set; }
+        public string? cntc_sfecha_contrato { get; set; }
         public int? cntc_icod_vendedor { get; set; }
         public int? cntc_iorigen_venta { get; set; }
         public int? cntc_icod_funeraria { get; set; }
@@ -15,7 +15,7 @@
         public string? cntc_vapellido_materno_contratante { get; set; }
         public string? cntc_vdni_contratante { get; set; }
         public string? cntc_vruc_contratante { get; set; }
-        public DateTime? cntc_sfecha_nacimineto_contratante { get; set; }
+        public string? cntc_sfecha_nacimineto_contratante { get; set; }
         public string? cntc_vtelefono_contratante { get; set; }
         public string? cntc_vdireccion_correo_contratante { get; set; }
         public string? cntc_vdireccion_contratante { get; set; }
@@ -28,7 +28,7 @@
         public string? cntc_vapellido_materno_representante { get; set; }
         public string? cntc_vdni_representante { get; set; }
         public string? cntc_ruc_representante { get; set; }
-        public DateTime? cntc_sfecha_nacimiento_representante { get; set; }
+        public string? cntc_sfecha_nacimiento_representante { get; set; }
         public int? cntc_iestado_civil_representante { get; set; }
         public string? cntc_vestado_civil_representante { get; set; }
         public int? cntc_inacionalidad_respresentante { get; set; }
@@ -46,15 +46,15 @@
         public string? cntc_vapellido_paterno_beneficiario { get; set; }
         public string? cntc_vapellido_materno_beneficiario { get; set; }
         public string? cntc_vdni_beneficiario { get; set; }
-        public DateTime? cntc_sfecha_nacimiento_beneficiario { get; set; }
+        public string? cntc_sfecha_nacimiento_beneficiario { get; set; }
         public string? cntc_vdireccion_beneficiario { get; set; }
         public string? cntc_vnombre_fallecido { get; set; }
         public string? cntc_vapellido_paterno_fallecido { get; set; }
         public string? cntc_vapellido_materno_fallecido { get; set; }
         public string? cntc_vdni_fallecido { get; set; }
-        public DateTime? cntc_sfecha_nac_fallecido { get; set; }
-        public DateTime? cntc_sfecha_fallecimiento { get; set; }
-        public DateTime? cntc_sfecha_entierro { get; set; }
+        public string? cntc_sfecha_nac_fallecido { get; set; }
+        public string? cntc_sfecha_fallecimiento { get; set; }
+        public string? cntc_sfecha_entierro { get; set; }
         public int? cntc_itipo_documento_fallecido { get; set; }
         public string? cntc_vdocumento_fallecido { get; set; }
         public int? cntc_inacionalidad { get; set; }
@@ -94,20 +94,20 @@
         public string? cntc_vcodigo_sepultura { get; set; }
         public string? cntc_vnumero_reserva { get; set; }
         public int? cntc_iusuario_crea { get; set; }
-        public DateTime? cntc_sfecha_crea { get; set; }
+        public string? cntc_sfecha_crea { get; set; }
         public string? cntc_vpc_crea { get; set; }
         public int? cntc_iusuario_modifica { get; set; }
-        public DateTime? cntc_sfecha_modifica { get; set; }
+        public string? cntc_sfecha_modifica { get; set; }
         public string? cntc_vpc_modifica { get; set; }
         public int? cntc_iusuario_elimina { get; set; }
-        public DateTime? cntc_sfecha_elimina { get; set; }
+        public string? cntc_sfecha_elimina { get; set; }
         public string? cntc_vpc_elimina { get; set; }
         public bool? cntc_flag_estado { get; set; }
         public int? cntc_icod_situacion { get; set; }
         public decimal? cntc_ncuota_inicial { get; set; }
         public int? cntc_inro_cuotas { get; set; }
         public decimal? cntc_nmonto_cuota { get; set; }
-        public DateTime? cntc_sfecha_cuota { get; set; }
+        public string? cntc_sfecha_cuota { get; set; }
         public string? cntc_vdescripcion_anulacion { get; set; }
         public int? cntc_icod_indicador_espacios { get; set; }
         public string? cntc_vobservaciones { get; set; }
@@ -130,7 +130,8 @@
         public string? cntc_vnumero_solicitud { get; set; }
         public int? cntc_iestado_sol { get; set; }
         public string? cntc_vobservaciones_sol { get; set; }
-        public DateTime? cntc_sfecha_inicio_pago { get; set; }
-        public DateTime? cntc_sfecha_fin_pago { get; set; }
+        public string? cntc_sfecha_inicio_pago { get; set; }
+        public string? cntc_sfecha_fin_pago { get; set; }
+
     }
 }

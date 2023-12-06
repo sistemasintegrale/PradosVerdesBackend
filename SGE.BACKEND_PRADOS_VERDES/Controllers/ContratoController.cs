@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SGE.BACKEND_PRADOS_VERDES.Dtos;
@@ -18,15 +19,17 @@ namespace SGE.BACKEND_PRADOS_VERDES.Controllers
     {
         private readonly IContratoService _contratoService;
         private readonly IUsuarioService _usuarioService;
+        private IMapper _mapper;
 
-        public ContratoController(IContratoService contratoService, IUsuarioService usuarioService) 
+        public ContratoController(IContratoService contratoService, IUsuarioService usuarioService, IMapper mapper)
         {
             _contratoService = contratoService;
             _usuarioService = usuarioService;
+            _mapper = mapper;
         }
 
         [HttpPost]
-        public async Task<ActionResult<BaseResponse<IEnumerable<Contrato>>>> GetAll([FromBody] ContratoFiltersDto filter)
+        public async Task<ActionResult<BaseResponse<IEnumerable<ContratoDTO>>>> GetAll([FromBody] ContratoFiltersDto filter)
         {
             var identntity = HttpContext.User.Identity as ClaimsIdentity;
             var userclaims = identntity!.Claims;
@@ -37,16 +40,17 @@ namespace SGE.BACKEND_PRADOS_VERDES.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BaseResponse<Contrato>>> GetById([FromHeader]int id)
+        public async Task<ActionResult<BaseResponse<Contrato>>> GetById([FromHeader] int id)
         {
             var data = await _contratoService.ContratoGetById(id);
             return Ok(data);
         }
 
         [HttpGet("Funerarias")]
-        public async Task<ActionResult<BaseResponse<IEnumerable<Funerarias>>>> funerarias() { 
-            var data     = await _contratoService.Funerarias();
-            return Ok(data);    
+        public async Task<ActionResult<BaseResponse<IEnumerable<Funerarias>>>> funerarias()
+        {
+            var data = await _contratoService.Funerarias();
+            return Ok(data);
         }
 
         [HttpGet("Distritos")]
@@ -62,5 +66,42 @@ namespace SGE.BACKEND_PRADOS_VERDES.Controllers
             var data = await _contratoService.Parametros();
             return Ok(data);
         }
+
+        [HttpGet("ValidarSerie/{serie}")]
+        public async Task<ActionResult<BaseResponse<int>>> ValidarSerie([FromRoute] string serie)
+        {
+            var data = await _contratoService.ContratoValidarSerie(serie);
+            return Ok(data);
+        }
+
+        [HttpPost("Guardar")]
+        public async Task<ActionResult<BaseResponse<int>>> Guardar([FromBody] ContratoDTO contrato)
+        {
+
+            var identntity = HttpContext.User.Identity as ClaimsIdentity;
+            var userclaims = identntity!.Claims;
+            var usuario = await _usuarioService.UsuarioGetById(Convert.ToInt32(userclaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value));
+            var model = _mapper.Map<Contrato>(contrato);
+            model.cntc_iusuario_crea = usuario.Data!.usua_icod_usuario;
+            model.cntc_iusuario_modifica = usuario.Data.usua_icod_usuario;
+            model.cntc_sfecha_modifica = DateTime.Now;
+            model.cntc_sfecha_crea = DateTime.Now;
+            var data = await _contratoService.ContratoGuardar(model);
+            return Ok(data);
+        }
+
+        [HttpGet("Eliminar/{id}")]
+        public async Task<ActionResult<BaseResponse<bool>>> Eliminar([FromRoute] int id)
+        {
+            var identntity = HttpContext.User.Identity as ClaimsIdentity;
+            var userclaims = identntity!.Claims;
+            var usuario = await _usuarioService.UsuarioGetById(Convert.ToInt32(userclaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value));
+            EliminarDTO req = new EliminarDTO();
+            req.id = id;
+            req.usuario = usuario.Data.usua_icod_usuario;
+            var data    = await _contratoService.ContratoEliminar(req);
+            return Ok(data);
+        }
+
     }
 }
