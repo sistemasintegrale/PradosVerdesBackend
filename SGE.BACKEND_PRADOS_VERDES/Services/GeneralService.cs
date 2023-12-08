@@ -21,7 +21,7 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
         {
             var response = new BaseResponse<IEnumerable<TablaRegistro>>();
             try
-            {               
+            {
                 using (var conexion = _conexion.ObtenerConnexion())
                 {
                     var parametros = new DynamicParameters();
@@ -65,6 +65,27 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
                 using (var conexion = _conexion.ObtenerConnexion())
                 {
                     response.Data = await conexion.QueryAsync<Vendedor>("SGE_VENDEDOR_LISTAR", commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                response.innerExeption = ex.Message;
+                response.IsSucces = false;
+            }
+            return response;
+        }
+
+        public async Task<BaseResponse<IEnumerable<TablaVentasDetalle>>> TipoSepulturaByPlan(int tipoPlan, int nombrePlan)
+        {
+            var response = new BaseResponse<IEnumerable<TablaVentasDetalle>>();
+            try
+            {
+                using (var conexion = _conexion.ObtenerConnexion())
+                {
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@icod_tipo_plan", tipoPlan);
+                    parametros.Add("@icod_nombre_plan", nombrePlan);
+                    response.Data = await conexion.QueryAsync<TablaVentasDetalle>("USP_TIPO_SEPULTURA_BY_PLAN", parametros, commandType: CommandType.StoredProcedure);
                 }
             }
             catch (Exception ex)
