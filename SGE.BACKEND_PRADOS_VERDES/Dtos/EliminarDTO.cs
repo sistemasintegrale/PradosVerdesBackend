@@ -11,7 +11,7 @@ namespace SGE.BACKEND_PRADOS_VERDES.Dtos
         public EliminarDTO()
         {
             fecha = DateTime.Now;
-            pc = WindowsIdentity.GetCurrent().Name;
+            pc = "";
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace SGE.BACKEND_PRADOS_VERDES.Dtos
 {
-    public class ContratoDTO
+    public class ContratoDTO : FallecidoDTO
     {
         public int cntc_icod_contrato { get; set; }
         public string? cntc_vnumero_contrato { get; set; }
@@ -48,16 +48,9 @@
         public string? cntc_vdni_beneficiario { get; set; }
         public string? cntc_sfecha_nacimiento_beneficiario { get; set; }
         public string? cntc_vdireccion_beneficiario { get; set; }
-        public string? cntc_vnombre_fallecido { get; set; }
-        public string? cntc_vapellido_paterno_fallecido { get; set; }
-        public string? cntc_vapellido_materno_fallecido { get; set; }
+
         public string? cntc_vdni_fallecido { get; set; }
-        public string? cntc_sfecha_nac_fallecido { get; set; }
-        public string? cntc_sfecha_fallecimiento { get; set; }
-        public string? cntc_sfecha_entierro { get; set; }
-        public int? cntc_itipo_documento_fallecido { get; set; }
-        public string? cntc_vdocumento_fallecido { get; set; }
-        public int? cntc_inacionalidad { get; set; }
+
         public string? cntc_vnacionalidad { get; set; }
         public int? cntc_icodigo_plan { get; set; }
         public int? cntc_icod_nombre_plan { get; set; }
@@ -114,7 +107,7 @@
         public bool? cntc_flag_verificacion { get; set; }
         public int? cntc_indicador_pre_contrato { get; set; }
         public int? cntc_itipo_pago { get; set; }
-        public string? cntc_vdireccion_fallecido { get; set; }
+
         public int? cntc_itipo_doc_prestamo { get; set; }
         public int? func_icod_funeraria_prestamo { get; set; }
         public decimal? cntc_nmonto_foma { get; set; }

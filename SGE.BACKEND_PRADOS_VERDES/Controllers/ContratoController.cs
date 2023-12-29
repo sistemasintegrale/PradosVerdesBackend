@@ -78,16 +78,25 @@ namespace SGE.BACKEND_PRADOS_VERDES.Controllers
         public async Task<ActionResult<BaseResponse<int>>> Guardar([FromBody] ContratoDTO contrato)
         {
 
-            var identntity = HttpContext.User.Identity as ClaimsIdentity;
-            var userclaims = identntity!.Claims;
-            var usuario = await _usuarioService.UsuarioGetById(Convert.ToInt32(userclaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value));
-            var model = _mapper.Map<Contrato>(contrato);
-            model.cntc_iusuario_crea = usuario.Data!.usua_icod_usuario;
-            model.cntc_iusuario_modifica = usuario.Data.usua_icod_usuario;
-            model.cntc_sfecha_modifica = DateTime.Now;
-            model.cntc_sfecha_crea = DateTime.Now;
-            var data = await _contratoService.ContratoGuardar(model);
-            return Ok(data);
+            try
+            {
+                var identntity = HttpContext.User.Identity as ClaimsIdentity;
+                var userclaims = identntity!.Claims;
+                var usuario = await _usuarioService.UsuarioGetById(Convert.ToInt32(userclaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value));
+                var model = _mapper.Map<Contrato>(contrato);
+                model.cntc_iusuario_crea = usuario.Data!.usua_icod_usuario;
+                model.cntc_iusuario_modifica = usuario.Data.usua_icod_usuario;
+                model.cntc_sfecha_modifica = DateTime.Now;
+                model.cntc_sfecha_crea = DateTime.Now;
+
+                Fallecido modelFallecido = _mapper.Map<Fallecido>(contrato);
+                var data = await _contratoService.ContratoGuardar(model, modelFallecido);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [HttpGet("Eliminar/{id}")]
@@ -99,7 +108,7 @@ namespace SGE.BACKEND_PRADOS_VERDES.Controllers
             EliminarDTO req = new EliminarDTO();
             req.id = id;
             req.usuario = usuario.Data.usua_icod_usuario;
-            var data    = await _contratoService.ContratoEliminar(req);
+            var data = await _contratoService.ContratoEliminar(req);
             return Ok(data);
         }
 
