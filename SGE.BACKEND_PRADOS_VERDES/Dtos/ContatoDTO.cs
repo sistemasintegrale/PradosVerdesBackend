@@ -125,6 +125,7 @@
         public string? cntc_vobservaciones_sol { get; set; }
         public string? cntc_sfecha_inicio_pago { get; set; }
         public string? cntc_sfecha_fin_pago { get; set; }
+        public string? cntc_vorigen_registro { get; set; }
 
     }
 }
