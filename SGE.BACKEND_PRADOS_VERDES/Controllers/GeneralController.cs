@@ -39,10 +39,17 @@ namespace SGE.BACKEND_PRADOS_VERDES.Controllers
             return Ok(data);
         }
 
-        [HttpGet("TipoSepultura/{tipoPlan}/{nombrePlan}")]
-        public async Task<ActionResult<BaseResponse<IEnumerable<TablaVentasDetalle>>>> TipoSepulturaByPlan(int tipoPlan, int nombrePlan)
+        [HttpGet("TipoSepultura/{tipoPlan}/{nombrePlan}/{tipoSepultura}")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<TipoSepulturaDto>>>> TipoSepulturaByPlan(int tipoPlan, int nombrePlan, int tipoSepultura)
         {
-            var data = await _generalService.TipoSepulturaByPlan(tipoPlan, nombrePlan);
+            var data = await _generalService.TipoSepulturaByPlan(tipoPlan, nombrePlan, tipoSepultura);
+            return Ok(data);
+        }
+
+        [HttpGet("TipoSepulturaDetalle/{id_cab}")]
+        public async Task<ActionResult<BaseResponse<IEnumerable<TipoSepulturaDetalle>>>> TipoSepulturaDetalle(int id_cab)
+        {
+            var data = await _generalService.PlanNesecidadSepulturaDetalle(id_cab);
             return Ok(data);
         }
     }

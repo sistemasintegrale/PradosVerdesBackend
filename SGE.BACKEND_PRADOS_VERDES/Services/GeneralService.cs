@@ -1,10 +1,9 @@
-﻿using Dapper;
+﻿using System.Data;
+using Dapper;
 using SGE.BACKEND_PRADOS_VERDES.Context;
 using SGE.BACKEND_PRADOS_VERDES.Dtos;
-using SGE.BACKEND_PRADOS_VERDES.Filters;
 using SGE.BACKEND_PRADOS_VERDES.Interfaces;
 using SGE.BACKEND_PRADOS_VERDES.Models;
-using System.Data;
 
 namespace SGE.BACKEND_PRADOS_VERDES.Services
 {
@@ -75,9 +74,11 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
             return response;
         }
 
-        public async Task<BaseResponse<IEnumerable<TablaVentasDetalle>>> TipoSepulturaByPlan(int tipoPlan, int nombrePlan)
+
+
+        public async Task<BaseResponse<IEnumerable<TipoSepulturaDto>>> TipoSepulturaByPlan(int tipoPlan, int nombrePlan, int icod_tipo_sepultura)
         {
-            var response = new BaseResponse<IEnumerable<TablaVentasDetalle>>();
+            var response = new BaseResponse<IEnumerable<TipoSepulturaDto>>();
             try
             {
                 using (var conexion = _conexion.ObtenerConnexion())
@@ -85,7 +86,29 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
                     var parametros = new DynamicParameters();
                     parametros.Add("@icod_tipo_plan", tipoPlan);
                     parametros.Add("@icod_nombre_plan", nombrePlan);
-                    response.Data = await conexion.QueryAsync<TablaVentasDetalle>("USP_TIPO_SEPULTURA_BY_PLAN", parametros, commandType: CommandType.StoredProcedure);
+                    parametros.Add("@icod_tipo_sepultura", icod_tipo_sepultura);
+                    response.Data = await conexion.QueryAsync<TipoSepulturaDto>("USP_TIPO_SEPULTURA_BY_PLAN", parametros, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                response.innerExeption = ex.Message;
+                response.IsSucces = false;
+            }
+            return response;
+        }
+
+        public async Task<BaseResponse<IEnumerable<TipoSepulturaDetalle>>> PlanNesecidadSepulturaDetalle(int id_cab)
+        {
+            var response = new BaseResponse<IEnumerable<TipoSepulturaDetalle>>();
+            try
+            {
+                using (var conexion = _conexion.ObtenerConnexion())
+                {
+                    var parametros = new DynamicParameters();
+
+                    parametros.Add("@id_cab", id_cab);
+                    response.Data = await conexion.QueryAsync<TipoSepulturaDetalle>("USP_TIPO_SEPULTURA_DETALLE", parametros, commandType: CommandType.StoredProcedure);
                 }
             }
             catch (Exception ex)
