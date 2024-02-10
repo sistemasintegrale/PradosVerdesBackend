@@ -127,5 +127,8 @@
         public string? cntc_sfecha_fin_pago { get; set; }
         public string? cntc_vorigen_registro { get; set; }
 
+        public int? cntc_iparentesco_contratante { get; set; }
+        public int? cntc_iestado_civil_contratante { get; set; }
+
     }
 }

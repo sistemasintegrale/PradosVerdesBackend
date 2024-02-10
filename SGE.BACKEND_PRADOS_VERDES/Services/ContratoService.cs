@@ -68,8 +68,8 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
                     response.Data = await conexion.ExecuteScalarAsync<int>("USP_CONTRATO_GUARDAR", contrato, commandType: CommandType.StoredProcedure);
                 }
                 fallecido.cntc_icod_contrato = response.Data;
-                fallecido.usuario_accion = (int)(contrato.cntc_iusuario_crea ?? contrato.cntc_iusuario_modifica);
-                fallecido.pc_accion = string.IsNullOrEmpty(contrato.cntc_vpc_crea) ? contrato.cntc_vpc_crea : contrato.cntc_vpc_modifica;
+                fallecido.usuario_accion = (int)(contrato.cntc_iusuario_crea ?? contrato.cntc_iusuario_modifica)!;
+                fallecido.pc_accion = (string.IsNullOrEmpty(contrato.cntc_vpc_crea) ? contrato.cntc_vpc_crea : contrato.cntc_vpc_modifica)!;
                 fallecido.cntc_sfecha_accion = DateTime.Now;
                 using (var conexion = _conexion.ObtenerConnexion())
                 {

@@ -107,7 +107,7 @@ namespace SGE.BACKEND_PRADOS_VERDES.Controllers
             var usuario = await _usuarioService.UsuarioGetById(Convert.ToInt32(userclaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value));
             EliminarDTO req = new EliminarDTO();
             req.id = id;
-            req.usuario = usuario.Data.usua_icod_usuario;
+            req.usuario = usuario.Data!.usua_icod_usuario;
             var data = await _contratoService.ContratoEliminar(req);
             return Ok(data);
         }

@@ -46,5 +46,7 @@
         public int? cntc_iusuario_modifica { get; set; }
         public DateTime? cntc_sfecha_modifica { get; set; }
         public string? cntc_vpc_modifica { get; set; }
+        public int? cntc_iestado_civil_contratante { get; set; }
+        public int? cntc_iparentesco_contratante { get; set; }
     }
 }
