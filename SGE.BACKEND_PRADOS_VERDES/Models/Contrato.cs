@@ -48,5 +48,6 @@
         public string? cntc_vpc_modifica { get; set; }
         public int? cntc_iestado_civil_contratante { get; set; }
         public int? cntc_iparentesco_contratante { get; set; }
+        public string? cntc_vparentesco_contratante { get; set; }
     }
 }

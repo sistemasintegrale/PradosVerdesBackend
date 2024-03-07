@@ -10,6 +10,7 @@
         public int? cntc_icod_funeraria { get; set; }
         public string? cntc_vnombre_comercial { get; set; }
         public string? cntc_vunidad_venta { get; set; }
+
         public string? cntc_vnombre_contratante { get; set; }
         public string? cntc_vapellido_paterno_contratante { get; set; }
         public string? cntc_vapellido_materno_contratante { get; set; }
@@ -20,9 +21,28 @@
         public string? cntc_vdireccion_correo_contratante { get; set; }
         public string? cntc_vdireccion_contratante { get; set; }
         public int? cntc_inacionalidad_contratante { get; set; }
-        public string? cntc_vnacionalidad_cotratante { get; set; }
         public int? cntc_itipo_documento_contratante { get; set; }
         public string? cntc_vdocumento_contratante { get; set; }
+        public int? cntc_iparentesco_contratante { get; set; }
+        public int? cntc_iestado_civil_contratante { get; set; }
+        public string? cntc_vparentesco_contratante { get; set; }
+
+        public string? cntc_vnombre_contratante2 { get; set; }
+        public string? cntc_vapellido_paterno_contratante2 { get; set; }
+        public string? cntc_vapellido_materno_contratante2 { get; set; }
+        public string? cntc_vdni_contratante2 { get; set; }
+        public string? cntc_vruc_contratante2 { get; set; }
+        public string? cntc_sfecha_nacimineto_contratante2 { get; set; }
+        public string? cntc_vtelefono_contratante2 { get; set; }
+        public string? cntc_vdireccion_correo_contratante2 { get; set; }
+        public string? cntc_vdireccion_contratante2 { get; set; }
+        public int? cntc_inacionalidad_contratante2 { get; set; }
+        public int? cntc_itipo_documento_contratante2 { get; set; }
+        public string? cntc_vdocumento_contratante2 { get; set; }
+        public int? cntc_iparentesco_contratante2 { get; set; }
+        public int? cntc_iestado_civil_contratante2 { get; set; }
+        public string? cntc_vparentesco_contratante2 { get; set; }
+
         public string? cntc_vnombre_representante { get; set; }
         public string? cntc_vapellido_paterno_representante { get; set; }
         public string? cntc_vapellido_materno_representante { get; set; }
@@ -127,8 +147,7 @@
         public string? cntc_sfecha_fin_pago { get; set; }
         public string? cntc_vorigen_registro { get; set; }
 
-        public int? cntc_iparentesco_contratante { get; set; }
-        public int? cntc_iestado_civil_contratante { get; set; }
+
 
     }
 }

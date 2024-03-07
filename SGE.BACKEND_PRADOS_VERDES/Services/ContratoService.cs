@@ -57,7 +57,7 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
         }
 
 
-        public async Task<BaseResponse<int>> ContratoGuardar(Contrato contrato, Fallecido fallecido)
+        public async Task<BaseResponse<int>> ContratoGuardar(Contrato contrato, Fallecido fallecido, Contratante pricipal, Contratante secundario)
         {
             var response = new BaseResponse<int>();
             try
@@ -71,9 +71,23 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
                 fallecido.usuario_accion = (int)(contrato.cntc_iusuario_crea ?? contrato.cntc_iusuario_modifica)!;
                 fallecido.pc_accion = (string.IsNullOrEmpty(contrato.cntc_vpc_crea) ? contrato.cntc_vpc_crea : contrato.cntc_vpc_modifica)!;
                 fallecido.cntc_sfecha_accion = DateTime.Now;
+
                 using (var conexion = _conexion.ObtenerConnexion())
                 {
-                    response.Data = await conexion.ExecuteScalarAsync<int>("USP_CONTRATOS_FALLECIDO_GUARDAR", fallecido, commandType: CommandType.StoredProcedure);
+                    await conexion.ExecuteScalarAsync<int>("USP_CONTRATOS_FALLECIDO_GUARDAR", fallecido, commandType: CommandType.StoredProcedure);
+                }
+
+                pricipal.cntc_icod_contrato = response.Data;
+                secundario.cntc_icod_contrato = response.Data;
+
+                using (var conexion = _conexion.ObtenerConnexion())
+                {
+                    await conexion.ExecuteAsync("USP_CONTRATANTES_INSERTAR", pricipal, commandType: CommandType.StoredProcedure);
+                }
+
+                using (var conexion = _conexion.ObtenerConnexion())
+                {
+                    await conexion.ExecuteAsync("USP_CONTRATANTES_INSERTAR", secundario, commandType: CommandType.StoredProcedure);
                 }
 
             }

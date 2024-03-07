@@ -34,6 +34,8 @@ namespace SGE.BACKEND_PRADOS_VERDES.Mappers
                  .ForMember(dest => dest.cntc_sfecha_nac_fallecido, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.cntc_sfecha_nac_fallecido) ? (DateTime?)null : DateTime.ParseExact(src.cntc_sfecha_nac_fallecido!, "yyyy-MM-dd", CultureInfo.InvariantCulture)))
                  .ForMember(dest => dest.cntc_sfecha_fallecimiento, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.cntc_sfecha_fallecimiento) ? (DateTime?)null : DateTime.ParseExact(src.cntc_sfecha_fallecimiento!, "yyyy-MM-dd", CultureInfo.InvariantCulture)))
                  .ForMember(dest => dest.cntc_sfecha_entierro, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.cntc_sfecha_entierro) ? (DateTime?)null : DateTime.ParseExact(src.cntc_sfecha_entierro!, "yyyy-MM-dd", CultureInfo.InvariantCulture)));
+
+            CreateMap<ContratoDTO, Contratante>();
         }
     }
 }
