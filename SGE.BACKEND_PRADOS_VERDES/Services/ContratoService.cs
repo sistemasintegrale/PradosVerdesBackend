@@ -99,6 +99,26 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
             return response;
         }
 
+        public async Task<BaseResponse<ContratoImpresion>> ContratoImpresion(int cntc_icod_contrato)
+        {
+            var response = new BaseResponse<ContratoImpresion>();
+            try
+            {
+                using (var conexion = _conexion.ObtenerConnexion())
+                {
+                    var parametros = new DynamicParameters();
+                    parametros.Add("@cntc_icod_contrato", cntc_icod_contrato);
+                    response.Data = await conexion.QueryFirstOrDefaultAsync<ContratoImpresion>("USP_CONTRATO_IMPRESION_POR_ID", parametros, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                response.innerExeption = ex.InnerException;
+                response.IsSucces = false;
+            }
+            return response;
+        }
+
         public async Task<BaseResponse<IEnumerable<ContratoDTO>>> ContratoListarPorFechas(ContratoFiltersDto filter)
         {
             var response = new BaseResponse<IEnumerable<ContratoDTO>>();

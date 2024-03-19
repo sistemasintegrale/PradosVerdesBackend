@@ -153,5 +153,12 @@ namespace SGE.BACKEND_PRADOS_VERDES.Controllers
             return Ok(data);
         }
 
+        [HttpGet("ContratoImpresion/{cntc_icod_contrato}")]
+        public async Task<ActionResult<BaseResponse<ContratoImpresion>>> GetContratoImpresion([FromRoute] int cntc_icod_contrato)
+        {
+            var data = await _contratoService.ContratoImpresion(cntc_icod_contrato);
+            return Ok(data);
+        }
+
     }
 }

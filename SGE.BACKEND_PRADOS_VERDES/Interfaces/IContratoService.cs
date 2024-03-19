@@ -14,5 +14,6 @@ namespace SGE.BACKEND_PRADOS_VERDES.Interfaces
         Task<BaseResponse<RegistroParametro>> Parametros();
         Task<BaseResponse<int>> ContratoValidarSerie(string serie);
         Task<BaseResponse<bool>> ContratoEliminar(EliminarDTO dTO);
+        Task<BaseResponse<ContratoImpresion>> ContratoImpresion(int cntc_icod_contrato);
     }
 }
