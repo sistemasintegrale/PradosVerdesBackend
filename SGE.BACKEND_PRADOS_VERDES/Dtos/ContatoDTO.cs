@@ -146,7 +146,7 @@
         public string? cntc_sfecha_inicio_pago { get; set; }
         public string? cntc_sfecha_fin_pago { get; set; }
         public string? cntc_vorigen_registro { get; set; }
-
+        public decimal? cntc_nsaldo { get; set; }
 
 
     }
