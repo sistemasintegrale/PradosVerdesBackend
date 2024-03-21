@@ -50,5 +50,10 @@
         public int? cntc_iparentesco_contratante { get; set; }
         public string? cntc_vparentesco_contratante { get; set; }
         public decimal? cntc_nsaldo { get; set; }
+        public string? cntc_vcapacidad_contrato { get; set; }
+        public string? cntc_vcapacidad_total { get; set; }
+        public string? cntc_vurnas { get; set; }
+        public string? cntc_vservico_inhumacion { get; set; }
+        public int? cntc_icod_plataforma { get; set; }
     }
 }

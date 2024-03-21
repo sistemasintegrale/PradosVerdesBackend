@@ -61,10 +61,11 @@ namespace SGE.BACKEND_PRADOS_VERDES.Models
         public decimal? Foma { get; set; }
         public decimal? PrecioTotal { get; set; }
         public decimal? PagoInicial { get; set; }
+        public decimal? Saldo { get; set; }
         public int? NumeroCuotas { get; set; }
         public decimal? MontoCuota { get; set; }
         public string? FechaCuota { get; set; }
-
+        public string? UltimoVencimiento { get; set; }
         public string? FechaContrato { get; set; }
 
     }

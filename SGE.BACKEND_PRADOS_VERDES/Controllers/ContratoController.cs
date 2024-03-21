@@ -44,7 +44,7 @@ namespace SGE.BACKEND_PRADOS_VERDES.Controllers
                 var identntity = HttpContext.User.Identity as ClaimsIdentity;
                 var userclaims = identntity!.Claims;
                 var usuario = await _usuarioService.UsuarioGetById(Convert.ToInt32(userclaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value));
-                var model = _mapper.Map<Contrato>(contrato);
+                Contrato model = _mapper.Map<Contrato>(contrato);
                 model.cntc_iusuario_crea = usuario.Data!.usua_icod_usuario;
                 model.cntc_iusuario_modifica = usuario.Data.usua_icod_usuario;
                 model.cntc_sfecha_modifica = DateTime.Now;
