@@ -67,7 +67,9 @@ namespace SGE.BACKEND_PRADOS_VERDES.Models
         public string? FechaCuota { get; set; }
         public string? UltimoVencimiento { get; set; }
         public string? FechaContrato { get; set; }
-
+        public string? Comprobante { get; set; }
+        public string? SistemaPago { get; set; }
+        public string? DocumentoFinanciado { get; set; }
     }
 }
 

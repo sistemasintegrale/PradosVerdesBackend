@@ -55,5 +55,6 @@
         public string? cntc_vurnas { get; set; }
         public string? cntc_vservico_inhumacion { get; set; }
         public int? cntc_icod_plataforma { get; set; }
+        public int? cntc_idocumento_financiado { get; set; }
     }
 }
