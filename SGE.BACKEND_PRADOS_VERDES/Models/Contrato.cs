@@ -56,5 +56,6 @@
         public string? cntc_vservico_inhumacion { get; set; }
         public int? cntc_icod_plataforma { get; set; }
         public int? cntc_idocumento_financiado { get; set; }
+        public int? cntc_icod_tipo_contrato { get; set; }
     }
 }

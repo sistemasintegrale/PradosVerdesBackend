@@ -70,6 +70,8 @@ namespace SGE.BACKEND_PRADOS_VERDES.Models
         public string? Comprobante { get; set; }
         public string? SistemaPago { get; set; }
         public string? DocumentoFinanciado { get; set; }
+        public string? TipoContrato { get; set; }
+        public string? TipoDeceso { get; set; }
     }
 }
 
