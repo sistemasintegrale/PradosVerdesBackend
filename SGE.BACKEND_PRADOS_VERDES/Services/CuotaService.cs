@@ -27,8 +27,8 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
                 {
                     var parametros = new DynamicParameters();
                     parametros.Add("@cntc_icod_contrato_cuotas", cuota.cntc_icod_contrato_cuotas);
-                    parametros.Add("@intUsuario", cuota.cntc_iusuario_crea);
-                    parametros.Add("@strPc", cuota.cntc_vpc_crea);
+                    parametros.Add("@cntc_iusuario_modifica", cuota.cntc_iusuario_crea);
+                    parametros.Add("@cntc_vpc_modifica", cuota.cntc_vpc_crea);
                     await conexion.ExecuteAsync("SGEV_CONTRATOS_CUOTAS_ELIMINAR", parametros, commandType: CommandType.StoredProcedure);
                 }
             }

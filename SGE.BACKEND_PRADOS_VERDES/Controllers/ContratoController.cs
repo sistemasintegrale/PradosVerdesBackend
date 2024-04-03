@@ -52,7 +52,7 @@ namespace SGE.BACKEND_PRADOS_VERDES.Controllers
             model.cntc_iusuario_modifica = usuario.Data.usua_icod_usuario;
             model.cntc_sfecha_modifica = DateTime.Now;
             model.cntc_sfecha_crea = DateTime.Now;
-
+            model.cntc_vpc_crea = "WEB";
             Fallecido modelFallecido = _mapper.Map<Fallecido>(contrato);
 
             Contratante principal = new()
