@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using System.Security.Principal;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -16,13 +17,17 @@ namespace SGE.BACKEND_PRADOS_VERDES.Controllers
     {
         private readonly IContratoService _contratoService;
         private readonly IUsuarioService _usuarioService;
+        private readonly ICuotaService _cuotaService;
+        private readonly IGeneralService _generalServie;
         private IMapper _mapper;
 
-        public ContratoController(IContratoService contratoService, IUsuarioService usuarioService, IMapper mapper)
+        public ContratoController(IContratoService contratoService, IUsuarioService usuarioService, IMapper mapper, ICuotaService cuotaService, IGeneralService generalServie)
         {
             _contratoService = contratoService;
             _usuarioService = usuarioService;
             _mapper = mapper;
+            _cuotaService = cuotaService;
+            _generalServie = generalServie;
         }
 
         [HttpPost]
@@ -35,8 +40,8 @@ namespace SGE.BACKEND_PRADOS_VERDES.Controllers
             var data = await _contratoService.ContratoListarPorFechas(filter);
             return Ok(data);
         }
-        [HttpPost("Guardar")]
-        public async Task<ActionResult<BaseResponse<int>>> Guardar([FromBody] ContratoDTO contrato)
+        [HttpPost("Guardar/{guardarCuota}")]
+        public async Task<ActionResult<BaseResponse<int>>> Guardar([FromBody] ContratoDTO contrato, [FromRoute] bool guardarCuota)
         {
 
             var identntity = HttpContext.User.Identity as ClaimsIdentity;
@@ -93,6 +98,114 @@ namespace SGE.BACKEND_PRADOS_VERDES.Controllers
             };
 
             var data = await _contratoService.ContratoGuardar(model, modelFallecido, principal, segundo);
+            if (data.Data > 0 && guardarCuota == true)
+            {
+                var cuotaAnterios = (await _cuotaService.CuotaListar(data.Data)).Data!.ToList();
+                cuotaAnterios.ForEach(async x =>
+                {
+                    x.cntc_iusuario_crea = (int)model.cntc_iusuario_crea!;
+                    x.cntc_vpc_crea = model.cntc_vpc_crea;
+                    await _cuotaService.CuotaEliminar(x);
+                });
+                var lstCuotas = new List<Cuota>();
+                if (Convert.ToInt32(model.cntc_itipo_pago) == 674) // CREDITO
+                {
+                    int NroCuotas = (Convert.ToInt32(model.cntc_inro_cuotas));
+
+                    for (int y = 0; y <= NroCuotas; y++)
+                    {
+                        Cuota EDet = new Cuota();
+                        if (y == 0)
+                        {
+
+                            EDet.cntc_inro_cuotas = y;
+                            EDet.cntc_sfecha_cuota = Convert.ToDateTime(model.cntc_sfecha_contrato);
+                            EDet.cntc_icod_tipo_cuota = 336;
+
+                            EDet.cntc_nmonto_cuota = Convert.ToDecimal(model.cntc_ncuota_inicial);
+                            EDet.cntc_icod_situacion = 338;
+
+                            EDet.cntc_iusuario_crea = model.cntc_iusuario_crea;
+                            EDet.cntc_vpc_crea = "WEB";
+                            EDet.cntc_nsaldo = EDet.cntc_nmonto_cuota;
+                            EDet.cntc_npagado = 0;
+                            EDet.cntc_itipo_cuota = 0;// INDICADOR PRINCIPAL
+                            EDet.cntc_nmonto_mora = 0;
+                            EDet.cntc_nmonto_mora_pago = 0;
+
+                            lstCuotas.Add(EDet);
+
+
+
+
+                        }
+                        else if (y == 1)
+                        {
+
+                            EDet.cntc_inro_cuotas = y;
+                            EDet.cntc_sfecha_cuota = Convert.ToDateTime(model.cntc_sfecha_contrato);
+                            EDet.cntc_icod_tipo_cuota = 337;
+                            EDet.cntc_nmonto_cuota = Convert.ToDecimal(model.cntc_nmonto_cuota);
+                            EDet.cntc_icod_situacion = 338;
+                            EDet.cntc_iusuario_crea = model.cntc_iusuario_crea;
+                            EDet.cntc_vpc_crea = "WEB";
+                            EDet.cntc_nsaldo = EDet.cntc_nmonto_cuota;
+                            EDet.cntc_npagado = 0;
+                            EDet.cntc_itipo_cuota = 0;
+                            EDet.cntc_nmonto_mora = 0;
+                            EDet.cntc_nmonto_mora_pago = 0;
+                            lstCuotas.Add(EDet);
+
+
+                        }
+                        else
+                        {
+
+                            EDet.cntc_inro_cuotas = y;
+                            EDet.cntc_sfecha_cuota = Convert.ToDateTime(model.cntc_sfecha_cuota!.Value.AddMonths(y - 1));
+                            EDet.cntc_icod_tipo_cuota = 337;
+                            EDet.cntc_nmonto_cuota = Convert.ToDecimal(model.cntc_nmonto_cuota);
+                            EDet.cntc_icod_situacion = 338;
+                            EDet.cntc_iusuario_crea = model.cntc_iusuario_crea;
+                            EDet.cntc_vpc_crea = "WEB";
+                            EDet.cntc_nsaldo = EDet.cntc_nmonto_cuota;
+                            EDet.cntc_npagado = 0;
+                            EDet.cntc_itipo_cuota = 0;
+                            EDet.cntc_nmonto_mora = 0;
+                            EDet.cntc_nmonto_mora_pago = 0;
+                            lstCuotas.Add(EDet);
+
+                        }
+
+                    }
+                }
+                else
+                {
+                    TablaVentasDetalle obj = (await _generalServie.ListarTablaVentasDetalle(15)).Data!.ToList().Where(x => x.tabvd_iid_tabla_venta_det == 5430).FirstOrDefault()!;
+                    Cuota EDetF = new Cuota();
+                    EDetF.cntc_inro_cuotas = 1;
+                    EDetF.cntc_sfecha_cuota = Convert.ToDateTime(model.cntc_sfecha_contrato);
+                    EDetF.cntc_icod_tipo_cuota = obj.tabvd_iid_tabla_venta_det;
+                    EDetF.cntc_nmonto_cuota = Convert.ToDecimal(model.cntc_nprecio_total);
+                    EDetF.cntc_icod_situacion = 338;
+                    EDetF.cntc_iusuario_crea = model.cntc_iusuario_crea;
+                    EDetF.cntc_vpc_crea = "WEB";
+                    EDetF.cntc_nsaldo = EDetF.cntc_nmonto_cuota;
+                    EDetF.cntc_npagado = 0;
+                    EDetF.cntc_nmonto_mora_pago = 0;
+                    EDetF.cntc_itipo_cuota = 0;
+                    EDetF.cntc_nmonto_mora = 0;
+                    lstCuotas.Add(EDetF);
+                }
+
+                lstCuotas.ForEach(async x =>
+                {
+                    x.cntc_icod_contrato = data.Data;
+                    x.cntc_iusuario_crea = (int)model.cntc_iusuario_crea;
+                    x.cntc_vpc_crea = model.cntc_vpc_crea;
+                    await _cuotaService.CuotaGuardar(x);
+                });
+            }
             return Ok(data);
 
         }
