@@ -62,6 +62,11 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
             var response = new BaseResponse<int>();
             try
             {
+                var validarSerie = (await ContratoValidarSerie(contrato.cntc_vnumero_contrato!)).Data;
+                if (validarSerie == 1)
+                {
+                    throw new ArgumentException($"Ya existe contrato N° {contrato.cntc_vnumero_contrato!}");
+                }
 
                 using (var conexion = _conexion.ObtenerConnexion())
                 {
@@ -93,6 +98,7 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
             }
             catch (Exception ex)
             {
+                response.Mensaje = ex.Message;
                 response.innerExeption = ex.Message;
                 response.IsSucces = false;
             }
