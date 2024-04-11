@@ -3,6 +3,7 @@ namespace SGE.BACKEND_PRADOS_VERDES.Models
 {
     public class ContratoImpresion
     {
+        public int IdContrato { get; set; }
         public string? NumeroContrato { get; set; }
         public string? strNombreIEC { get; set; }
         public string? OrigenVenta { get; set; }
@@ -72,6 +73,7 @@ namespace SGE.BACKEND_PRADOS_VERDES.Models
         public string? DocumentoFinanciado { get; set; }
         public string? TipoContrato { get; set; }
         public string? TipoDeceso { get; set; }
+        public string? ReligionFallecido { get; set; }
     }
 }
 
