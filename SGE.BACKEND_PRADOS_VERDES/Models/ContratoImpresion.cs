@@ -74,6 +74,8 @@ namespace SGE.BACKEND_PRADOS_VERDES.Models
         public string? TipoContrato { get; set; }
         public string? TipoDeceso { get; set; }
         public string? ReligionFallecido { get; set; }
+        public string? CorreoContrantante { get; set; }
+        public string? CorreoContrantante2 { get; set; }
     }
 }
 
