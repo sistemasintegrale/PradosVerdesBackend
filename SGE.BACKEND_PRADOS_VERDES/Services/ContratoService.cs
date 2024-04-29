@@ -63,7 +63,7 @@ namespace SGE.BACKEND_PRADOS_VERDES.Services
             try
             {
                 var validarSerie = (await ContratoValidarSerie(contrato.cntc_vnumero_contrato!)).Data;
-                if (validarSerie == 1)
+                if (validarSerie == 1 && contrato.cntc_icod_contrato == 0)
                 {
                     throw new ArgumentException($"Ya existe contrato N° {contrato.cntc_vnumero_contrato!}");
                 }
