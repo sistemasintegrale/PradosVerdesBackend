@@ -143,7 +143,7 @@ namespace SGE.BACKEND_PRADOS_VERDES.Controllers
                         {
 
                             EDet.cntc_inro_cuotas = y;
-                            EDet.cntc_sfecha_cuota = Convert.ToDateTime(model.cntc_sfecha_contrato);
+                            EDet.cntc_sfecha_cuota = Convert.ToDateTime(model.cntc_sfecha_cuota);
                             EDet.cntc_icod_tipo_cuota = 337;
                             EDet.cntc_nmonto_cuota = Convert.ToDecimal(model.cntc_nmonto_cuota);
                             EDet.cntc_icod_situacion = 338;
