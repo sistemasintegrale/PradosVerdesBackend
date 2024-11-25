@@ -8,12 +8,13 @@ using SGE.BACKEND_PRADOS_VERDES.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var Configuration = builder.Configuration;
-// Add services to the container.
+
 builder.Services.AddAuthentication(Configuration);
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwagger();
+
+
 builder.Services.AddSingleton(new Conexion(builder.Configuration.GetConnectionString("connection")));
 
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
